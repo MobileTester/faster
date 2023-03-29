@@ -1,7 +1,10 @@
 package com.application.testsuite.app.web;
 
+import static org.testng.Assert.assertTrue;
+
 import org.testng.annotations.Test;
 
+import com.application.testscenarios.GoogleSearchScenario;
 import com.application.testsuite.base.UIAutomationBaseTestClass;
 import com.application.testsuite.testdata.factory.TestDataReaderFactory;
 import com.application.testsuite.testdata.web.beans.TestCase01Testdatum;
@@ -18,6 +21,10 @@ public class TestCase01 extends UIAutomationBaseTestClass {
 	@Test(groups = {"uiAutomationTest"}, dependsOnMethods = {"method00_InitMethod"}, description="Perform Google search")
 	@TestData(type = TestDataReaderFactory.JSON, source = "TestCase01Testdata", dataBean = "com.application.testsuite.testdata.web.beans.TestCase01Testdatum")
 	public void method01_Search(TestCase01Testdatum testdatum) {
-		driver.get(testdatum.getGoogleURL());; 
+		GoogleSearchScenario googleSearchScenario = null;
+		
+		googleSearchScenario = new GoogleSearchScenario(driver);
+		
+		assertTrue(googleSearchScenario.s_PerfromGoogleSearch(testdatum.getGoogleURL(), testdatum.getSearchTerm()), "Search Operation Failed");
 	}
 }

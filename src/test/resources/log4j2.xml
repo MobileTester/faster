@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="WARN">
+    <properties>
+        <property name="logMsgPattern">%highlight{[%5X{threadPrepender}] [%d{yyyy-MM-dd HH:mm:ss}]] %c{1} - %m%n}{FATAL=red blink, ERROR=red bold, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}</property>
+        <property name="logMsgPatternForFile">[%5X{threadPrepender}] %d{dd MMM yyyy HH:mm:ss} %5p %c{1} - %m%n</property>
+        <property name="logDir">testlogs</property>
+        <property name="fileName">faster-execution-log</property>
+    </properties>
+    <appenders>
+         <Console name="Console" target="SYSTEM_OUT">           
+           <PatternLayout pattern="${logMsgPattern}"/>
+         </Console>
+         <DefaultRolloverStrategy>
+		    <Delete basePath="${logDir}" maxDepth="1">
+		      <IfFileName glob="*.log" />
+		    </Delete>
+ 		 </DefaultRolloverStrategy>
+        <Routing name="Routing">
+                    <Routes pattern="$${ctx:fileName}">             
+                        <Route>
+                            <RollingFile name="RollingFile-${ctx:fileName}" fileName="${logDir}/${ctx:fileName}.log" filePattern="${logDir}/%d{yyyy-MM-dd-HH-mm}/archived_%d{HH-mm}-${ctx:fileName}.log">
+                                    <PatternLayout pattern="${logMsgPatternForFile}"/>
+                                    <Policies>
+                                <OnStartupTriggeringPolicy />
+                            </Policies> 
+                    </RollingFile>
+                        </Route>
+                    </Routes>
+            </Routing>  
+    </appenders>
+
+    <loggers>               
+        <root level="debug">
+            <appender-ref ref="Console" level="debug" />
+            <appender-ref ref="Routing" level="debug"/>
+        </root>                     
+    </loggers>  
+</configuration>
