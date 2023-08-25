@@ -9,6 +9,8 @@ import com.application.testsuite.base.UIAutomationBaseTestClass;
 import com.application.testsuite.testdata.factory.TestDataReaderFactory;
 import com.application.testsuite.testdata.web.beans.TestCase01Testdatum;
 import com.application.utils.annotations.TestData;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.Status;
 
 public class TestCase01 extends UIAutomationBaseTestClass {
 	
@@ -16,6 +18,7 @@ public class TestCase01 extends UIAutomationBaseTestClass {
 	@Test(groups = {"uiAutomationTest"}, description="InitMethod")
 	public void method00_InitMethod() {
 		System.out.println("Initialized");
+		extentForTestClass.log(Status.PASS, "Initialization successful");
 	}
 	
 	@Test(groups = {"uiAutomationTest"}, dependsOnMethods = {"method00_InitMethod"}, description="Perform Google search")
@@ -26,5 +29,6 @@ public class TestCase01 extends UIAutomationBaseTestClass {
 		googleSearchScenario = new GoogleSearchScenario(driver);
 		
 		assertTrue(googleSearchScenario.s_PerfromGoogleSearch(testdatum.getGoogleURL(), testdatum.getSearchTerm()), "Search Operation Failed");
+		extentForTestClass.log(Status.PASS, "Google Search passed");
 	}
 }

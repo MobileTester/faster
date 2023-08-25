@@ -2,16 +2,15 @@ package com.application.testsuite.app.web;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.assertTrue;
 
 import org.testng.annotations.Test;
 
 import com.application.testscenarios.ApiExecutionScenario;
-import com.application.testscenarios.GoogleSearchScenario;
 import com.application.testsuite.base.UIAutomationBaseTestClass;
 import com.application.testsuite.testdata.factory.TestDataReaderFactory;
 import com.application.testsuite.testdata.web.beans.TestCase01Testdatum;
 import com.application.utils.annotations.TestData;
+import com.aventstack.extentreports.Status;
 
 import io.restassured.response.Response;
 
@@ -21,6 +20,7 @@ public class TestCase02 extends UIAutomationBaseTestClass {
 	@Test(groups = {"apiAutomationTest"}, description="InitMethod")
 	public void method00_InitMethod() {
 		System.out.println("API Automation Initialized");
+		extentForTestClass.log(Status.PASS, "Initialization successful");
 	}
 	
 	@Test(groups = {"apiAutomationTest"}, dependsOnMethods = {"method00_InitMethod"}, description="Get users")
@@ -36,6 +36,7 @@ public class TestCase02 extends UIAutomationBaseTestClass {
 		// Validating the response
 		assertEquals(response.statusCode(), 200, "API Execution Failed"); 
 		assertNotNull(response.getBody(), "API Exeucution Failed"); 
+		extentForTestClass.log(Status.PASS, "Successfully got the list of users");
 		
 	}
 	
@@ -56,6 +57,6 @@ public class TestCase02 extends UIAutomationBaseTestClass {
 		// Validating the response
 		assertEquals(response.statusCode(), 201, "API Execution Failed"); 
 		assertNotNull(response.getBody(), "API Exeucution Failed"); 
-		
+		extentForTestClass.log(Status.PASS, "Successfully created a user");
 	}
 }

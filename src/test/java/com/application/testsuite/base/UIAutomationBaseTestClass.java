@@ -23,7 +23,10 @@ import com.application.utils.configurationproperties.ConfigurationProperties;
 import com.application.utils.drivers.factory.WebDriverFactory;
 import com.application.utils.restapi.ExecuteRestApi;
 import com.application.utils.restapi.ReadResponse;
-
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.model.Test;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 public class UIAutomationBaseTestClass {
 
 	static Logger logger = LogManager.getLogger(UIAutomationBaseTestClass.class.getName());
@@ -34,12 +37,19 @@ public class UIAutomationBaseTestClass {
 	protected WebDriver driver = null;
 	protected ExecuteRestApi executeRestApi = null;
 	protected ReadResponse readResponse = null;
+	protected static ExtentReports extent = null;
+	protected ExtentTest extentForTestClass = null;
 	
 	@BeforeSuite(description = "Execute before all test cases", alwaysRun = true)
 	public void beforeAllTests(ITestContext context) {
 		
 		batchExecutionName = "UI_Execution_" + getTodaysDateAndTime();
 		browserName = ConfigurationProperties.getProperty("browser");
+		
+		// instantiating extent report
+		extent = new ExtentReports();
+		ExtentSparkReporter htmlReporter = new ExtentSparkReporter("test-output/extent-report.html");
+		extent.attachReporter(htmlReporter);
 		
 		logger.info("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
 		logger.info("*************STARTING BATCH EXECUTION:- " + batchExecutionName + " **********************");
@@ -60,6 +70,10 @@ public class UIAutomationBaseTestClass {
 		logger.info("{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{");
 		logger.info("*************Before Test Class Execution for:- " + this.getClass().getName() + " **********************");
 		logger.info("...........................................................................................................");
+		
+		ITestResult itr = Reporter.getCurrentTestResult();
+		String testClassName = itr.getInstance().getClass().getName();
+		extentForTestClass = extent.createTest(testClassName);
 		
 		// initializing the driver
 		driver = WebDriverFactory.getDriver(browserName);
@@ -111,6 +125,10 @@ public class UIAutomationBaseTestClass {
 		
 	}
 	
+	   @AfterSuite
+	    public void afterAllTests() {
+	        extent.flush();
+	    }
 	
 	public String getTodaysDateAndTime() {
 		String value = "";
