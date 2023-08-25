@@ -80,40 +80,6 @@
 			<version>5.3.1</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/io.qameta.allure/allure-testng -->
-		<dependency>
-			<groupId>io.qameta.allure</groupId>
-			<artifactId>allure-testng</artifactId>
-			<version>2.23.0</version>
-		</dependency>
-		<!--
-		https://mvnrepository.com/artifact/io.qameta.allure/allure-java-commons -->
-		<!--
-		<dependency>
-			<groupId>io.qameta.allure</groupId>
-			<artifactId>allure-java-commons</artifactId>
-			<version>2.23.0</version>
-		</dependency>
-		-->
-		<!--
-		https://mvnrepository.com/artifact/io.qameta.allure/allure-rest-assured -->
-		<!--
-		<dependency>
-			<groupId>io.qameta.allure</groupId>
-			<artifactId>allure-rest-assured</artifactId>
-			<version>2.23.0</version>
-		</dependency>
-		-->
-
-		<!-- https://mvnrepository.com/artifact/io.qameta.allure/allure-maven -->
-		<!--
-		<dependency>
-			<groupId>io.qameta.allure</groupId>
-			<artifactId>allure-maven</artifactId>
-			<version>2.12.0</version>
-		</dependency>
-		-->
-
 	</dependencies>
 
 	<properties>
@@ -172,13 +138,12 @@
 						<property>
 							<name>listener</name>
 							<value>
-								com.application.utils.listeners.ConfigurationAnnotationTransformerListener,
-								io.qameta.allure.testng.AllureTestNg
+								com.application.utils.listeners.ConfigurationAnnotationTransformerListener
 							</value>
 						</property>
 					</properties>
 					<systemPropertyVariables>
-						<allure.results.directory>target/allure-results</allure.results.directory>
+						
 					</systemPropertyVariables>
 					<parallel>classes</parallel>
 					<threadCount>20</threadCount>
@@ -207,17 +172,7 @@
 					</argLine>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>io.qameta.allure</groupId>
-				<artifactId>allure-maven</artifactId>
-				<version>2.10.0</version>
-				<configuration>
-					<propertiesFilePath>allure.properties</propertiesFilePath>
-					<!-- <properties><allure.issues.tracker.pattern>http://example.com/%s</allure.issues.tracker.pattern></properties> -->
-					<reportVersion>2.14.0</reportVersion>
-					<reportDirectory>${basedir}/target/allure-report</reportDirectory>
-				</configuration>
-			</plugin>
+
 		</plugins>
 
 

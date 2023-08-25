@@ -9,8 +9,6 @@ import org.openqa.selenium.WebDriver;
 
 import com.application.screens.web.GooglePageSearch;
 
-import io.qameta.allure.Step;
-
 public class GoogleSearchScenario {
 
 	private Logger logger = LogManager.getLogger(GoogleSearchScenario.class.getName());
@@ -29,7 +27,6 @@ public class GoogleSearchScenario {
 	 * @return - boolean
 	 * @author nikhil_narayanan
 	 */
-	@Step("Scenario to search Google with search term: {1}")
 	public boolean s_PerfromGoogleSearch(String url, String searchTerm) {
 		logger.info("Scenario: Going to execute s_PerfromGoogleSearch");
 		boolean aReturnValue = false;
