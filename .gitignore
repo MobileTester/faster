@@ -1,3 +1,5 @@
+.allure
+allure-results
 target/
 testlogs/
 pom.xml.tag
