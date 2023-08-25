@@ -76,5 +76,22 @@ public class ExecuteRestApi {
 		return response;
 	}
 	
+	public static void main(String[] args) {
+		
+		ExecuteRestApi temp = new ExecuteRestApi();
+		
+		Response responseGet = temp.executeGetRequest("https://reqres.in/api/users?page=2"); 
+		System.out.println(responseGet.getBody().asPrettyString());
+		
+		
+		String responseBody = "{\r\n"
+				+ "    \"name\": \"morpheus\",\r\n"
+				+ "    \"job\": \"leader\"\r\n"
+				+ "}";
+		Response responsePost = temp.executePostRequest("https://reqres.in/api/users", responseBody);
+		System.out.println(responsePost.getBody().asPrettyString());
+		
+	}
+	
 	
 }

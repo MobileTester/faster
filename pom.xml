@@ -10,18 +10,20 @@
 
 	<dependencies>
 
-		<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
+		<!--
+		https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
-			<version>4.8.1</version>
+			<version>4.11.0</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-http-jdk-client -->
+		<!--
+		https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-http-jdk-client -->
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-http-jdk-client</artifactId>
-			<version>4.8.3</version>
+			<version>4.11.0</version>
 		</dependency>
 
 
@@ -29,23 +31,25 @@
 		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
-			<version>7.7.1</version>
-			<scope>test</scope>
+			<version>7.8.0</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+		<!--
+		https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 			<version>2.9.8</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+		<!--
+		https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
 			<version>2.9.8</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations -->
+		<!--
+		https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
@@ -67,19 +71,53 @@
 			<artifactId>jsonschema2pojo-core</artifactId>
 			<version>1.0.0</version>
 		</dependency>
-		
+
+
 		<!-- https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
 		<dependency>
-		    <groupId>io.rest-assured</groupId>
-		    <artifactId>rest-assured</artifactId>
-		    <version>5.3.1</version>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<version>5.3.1</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/io.qameta.allure/allure-testng -->
+		<dependency>
+			<groupId>io.qameta.allure</groupId>
+			<artifactId>allure-testng</artifactId>
+			<version>2.23.0</version>
+		</dependency>
+		<!--
+		https://mvnrepository.com/artifact/io.qameta.allure/allure-java-commons -->
+		<!--
+		<dependency>
+			<groupId>io.qameta.allure</groupId>
+			<artifactId>allure-java-commons</artifactId>
+			<version>2.23.0</version>
+		</dependency>
+		-->
+		<!--
+		https://mvnrepository.com/artifact/io.qameta.allure/allure-rest-assured -->
+		<!--
+		<dependency>
+			<groupId>io.qameta.allure</groupId>
+			<artifactId>allure-rest-assured</artifactId>
+			<version>2.23.0</version>
+		</dependency>
+		-->
+
+		<!-- https://mvnrepository.com/artifact/io.qameta.allure/allure-maven -->
+		<!--
+		<dependency>
+			<groupId>io.qameta.allure</groupId>
+			<artifactId>allure-maven</artifactId>
+			<version>2.12.0</version>
+		</dependency>
+		-->
 
 	</dependencies>
 
 	<properties>
-		<aspectj.version>1.9.2</aspectj.version>
+		<aspectj.version>1.8.10</aspectj.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -119,7 +157,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>3.0.0-M9</version>
+				<version>3.1.2</version>
 				<configuration>
 					<argLine>
 						-javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
@@ -134,15 +172,18 @@
 						<property>
 							<name>listener</name>
 							<value>
-								com.application.utils.listeners.ConfigurationAnnotationTransformerListener
+								com.application.utils.listeners.ConfigurationAnnotationTransformerListener,
+								io.qameta.allure.testng.AllureTestNg
 							</value>
 						</property>
 					</properties>
 					<systemPropertyVariables>
+						<allure.results.directory>target/allure-results</allure.results.directory>
 					</systemPropertyVariables>
 					<parallel>classes</parallel>
 					<threadCount>20</threadCount>
-					<!-- After the master process of the build is shutdown by sending SIGTERM 
+					<!-- After the master process of the build is shutdown by
+					sending SIGTERM 
 						signal or pressing CTRL+C, the master process immediately sends SHUTDOWN 
 						command to every forked JVM. This makes sure that all the threads are stopped 
 						immediately after terminating the execution using CTRL+C -->
@@ -164,6 +205,17 @@
 					<argLine>
 						--illegal-access=permit
 					</argLine>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>io.qameta.allure</groupId>
+				<artifactId>allure-maven</artifactId>
+				<version>2.10.0</version>
+				<configuration>
+					<propertiesFilePath>allure.properties</propertiesFilePath>
+					<!-- <properties><allure.issues.tracker.pattern>http://example.com/%s</allure.issues.tracker.pattern></properties> -->
+					<reportVersion>2.14.0</reportVersion>
+					<reportDirectory>${basedir}/target/allure-report</reportDirectory>
 				</configuration>
 			</plugin>
 		</plugins>

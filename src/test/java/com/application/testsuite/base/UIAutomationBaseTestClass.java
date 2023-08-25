@@ -21,6 +21,8 @@ import org.testng.asserts.SoftAssert;
 
 import com.application.utils.configurationproperties.ConfigurationProperties;
 import com.application.utils.drivers.factory.WebDriverFactory;
+import com.application.utils.restapi.ExecuteRestApi;
+import com.application.utils.restapi.ReadResponse;
 
 public class UIAutomationBaseTestClass {
 
@@ -30,6 +32,8 @@ public class UIAutomationBaseTestClass {
 	protected SoftAssert completeFlowSoftAssert = null;
 	private String browserName = null;
 	protected WebDriver driver = null;
+	protected ExecuteRestApi executeRestApi = null;
+	protected ReadResponse readResponse = null;
 	
 	@BeforeSuite(description = "Execute before all test cases", alwaysRun = true)
 	public void beforeAllTests(ITestContext context) {
@@ -59,6 +63,9 @@ public class UIAutomationBaseTestClass {
 		
 		// initializing the driver
 		driver = WebDriverFactory.getDriver(browserName);
+		// initializing for Rest Api validations
+		executeRestApi = new ExecuteRestApi();
+		readResponse = new ReadResponse();
 		
 		logger.info("Initialized SoftAssert object");
 		completeFlowSoftAssert = new SoftAssert();
@@ -71,8 +78,12 @@ public class UIAutomationBaseTestClass {
 		logger.info("}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}");
 		
 		// quitting the driver
-		driver.quit();
-		driver = null;
+		if(driver != null) {
+			driver.quit();
+			driver = null;
+		}
+		executeRestApi = null;
+		readResponse = null;
 		
 		logger.info("Asserting for UI Validation failures for any Test Methods in this test class");
 		Reporter.log("Asserting for UI Validation failures for any Test Methods in this test class");
