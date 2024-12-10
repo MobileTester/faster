@@ -1,0 +1,6 @@
+{
+    "clearButton": { "strategy": "accessibilityId", "locator": "clear" },
+	"plusButton": { "strategy": "androidUIAutomator", "locator": "new UiSelector().resourceId(\"com.miui.calculator:id/op_add\")" },
+	"result": { "strategy": "id", "locator": "com.miui.calculator:id/result" },
+	"digitButtonIdLocator": { "strategy": "id", "locator": "com.miui.calculator:id/digit_%s" }
+}

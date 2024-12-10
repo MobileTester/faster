@@ -2,30 +2,51 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.automation.application</groupId>
-	<artifactId>faster</artifactId>
+	<groupId>com.faster.automation</groupId>
+	<artifactId>faster-nov-2024</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Faster</name>
-	<description>Automation Framework</description>
+	<description>Faster Automation Framework</description>
 
 	<dependencies>
 
+		<!-- Note: After many trials, found that the below combination of selenium-java - 4.16.1, java-client works 9.0.0
+		selenium-http-jdk-client - 4.13.0
+		 -->
 		<!--
 		https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
+			<!-- According to the compatibility matrix provided below, for
+			java-client 9.3.0, Selenium client should be max 4.23.0 -->
+			<!--
+			https://github.com/appium/java-client#add-appium-java-client-to-your-test-framework -->
 			<artifactId>selenium-java</artifactId>
-			<version>4.11.0</version>
+			<version>4.16.1</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/io.appium/java-client -->
+		<dependency>
+			<groupId>io.appium</groupId>
+			<artifactId>java-client</artifactId>
+			<version>9.0.0</version>
+		</dependency>
+		
 		<!--
 		https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-http-jdk-client -->
-		<dependency>
+		<!-- Inclusion of this dependency causes Exception:  java.lang.IllegalArgumentException: Unknown HttpClient factory netty  -->
+		<!--<dependency> 
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-http-jdk-client</artifactId>
-			<version>4.11.0</version>
+			<version>4.13.0</version>
 		</dependency>
-
+		-->
+		<dependency>
+    		<groupId>org.seleniumhq.selenium</groupId>
+   			<artifactId>selenium-remote-driver</artifactId>
+   			<version>4.16.1</version>
+		</dependency>
+		
 
 		<!-- https://mvnrepository.com/artifact/org.testng/testng -->
 		<dependency>
@@ -125,7 +146,7 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.0</version>
 				<configuration>
-					<release>11</release>
+					<release>20</release>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -146,15 +167,17 @@
 						<property>
 							<name>listener</name>
 							<value>
-								com.application.utils.listeners.ConfigurationAnnotationTransformerListener
+								com.data.listener.ConfigurationAnnotationTransformerListener
 							</value>
 						</property>
 					</properties>
 					<systemPropertyVariables>
 
 					</systemPropertyVariables>
-					<parallel>classes</parallel>
-					<threadCount>20</threadCount>
+					<!-- Commenting out to prevent parallel execution -->
+					<!-- <parallel>classes</parallel>
+					<threadCount>20</threadCount> -->
+					
 					<!-- After the master process of the build is shutdown by
 					sending SIGTERM 
 						signal or pressing CTRL+C, the master process immediately sends SHUTDOWN 

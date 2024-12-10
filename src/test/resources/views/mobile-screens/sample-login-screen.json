@@ -1,0 +1,5 @@
+{
+    "username": { "strategy": "id", "locator": "username_field" },
+    "password": { "strategy": "id", "locator": "password_field" },
+    "loginButton": { "strategy": "id", "locator": "login_button" }
+}
