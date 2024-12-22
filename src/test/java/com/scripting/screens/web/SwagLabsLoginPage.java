@@ -13,18 +13,24 @@ import com.driver.rolelocator.annotation.FindByRole;
 
 import io.appium.java_client.pagefactory.AndroidBy;
 
-public class GooglePageSearch {
+public class SwagLabsLoginPage {
 
-	Logger logger = LogManager.getLogger(GooglePageSearch.class.getName());
+	Logger logger = LogManager.getLogger(SwagLabsLoginPage.class.getName());
 	WebDriver pageDriver;
 	
-	@FindBy(name="q")
-	public WebElement searchTextBox;
+	@FindBy(id="user-name")
+	public WebElement usernameInput;
 	
-	@FindBy(xpath = "//*[text()='Sign in'][1]")
-	public WebElement signInButton;
+	@FindBy(id = "password")
+	public WebElement passwordInput;
 	
-	public GooglePageSearch(WebDriver driver) {
+	@FindBy(id = "login-button")
+	public WebElement loginButton;
+	
+	@FindBy(id = "login_credentials")
+	public WebElement loginCredentialsText;
+	
+	public SwagLabsLoginPage(WebDriver driver) {
 		logger.info("Going to initialize the page objects");
 		pageDriver = driver;
 		PageFactory.initElements(new AjaxElementLocatorFactory(driver, CommonConfigParameters.timeOutForElementPolling), this);

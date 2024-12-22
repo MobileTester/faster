@@ -12,6 +12,7 @@ import org.openqa.selenium.WebElement;
 import com.driver.locatorengine.UIConstructViewFromJson;
 import com.driver.locatorengine.UIView;
 import com.scripting.screens.web.GooglePageSearch;
+import com.scripting.screens.web.GooglePageSearch2;
 
 public class GoogleSearchScenario {
 
@@ -40,7 +41,7 @@ public class GoogleSearchScenario {
 			googlePageSearch = new GooglePageSearch(webDriverForPage);
 			logger.info("s_PerfromLogin: OLAMCTRMPortalPageLogin initialized");
 			logger.info("Getting the URL");
-			webDriverForPage.navigate().to(new URL(url));
+			webDriverForPage.navigate().to(new URI(url).toURL());
 			googlePageSearch.searchTextBox.sendKeys(searchTerm);
 			googlePageSearch.searchTextBox.sendKeys(Keys.RETURN);
 			logger.info("PASS: s_PerfromGoogleSearch");
@@ -85,5 +86,93 @@ public class GoogleSearchScenario {
 		logger.info("Scenario: End of s_PerfromGoogleSearch2");
 		return aReturnValue;
 	}
+	
+	/**
+	 * @description - Scenario to search Google Search screen
+	 * @startpoint - Google Search screen
+	 * @endpoint - Google screen with search results
+	 * @param - searchTerm
+	 * @return - boolean
+	 * @author nikhil_narayanan
+	 */
+	public boolean s_PerfromGoogleSearch3(String url, String searchTerm) {
+		logger.info("Scenario: Going to execute s_PerfromGoogleSearch");
+		boolean aReturnValue = false;
+		GooglePageSearch2 googlePageSearch = null;
+		try {
+			// Initializing the required page files
+			googlePageSearch = new GooglePageSearch2(webDriverForPage);
+			logger.info("Getting the URL");
+			webDriverForPage.navigate().to(new URI(url).toURL());
+			googlePageSearch.searchTextBox.sendKeys(searchTerm);
+			googlePageSearch.searchTextBox.sendKeys(Keys.RETURN);
+			logger.info("PASS: s_PerfromGoogleSearch");
+			// making the scenario as passed
+			aReturnValue = true;
+		}
+		catch(Exception e) {
+			logger.error("FAIL: s_PerfromGoogleSearch: Error occured while executing scenario \n" + e.getMessage());
+		}
+		logger.info("Scenario: End of s_PerfromGoogleSearch");
+		return aReturnValue;
+	}
+	
+	
+	/**
+	 * @description - Scenario to Click Sign In button
+	 * @startpoint - Google Search screen
+	 * @endpoint - Google Sign In page
+	 * @return - boolean
+	 * @author nikhil_narayanan
+	 */
+	public boolean s_ClickSignInButton(String url) {
+		logger.info("Scenario: Going to execute s_ClickSignInButton");
+		boolean aReturnValue = false;
+		GooglePageSearch2 googlePageSearch = null;
+		try {
+			// Initializing the required page files
+			googlePageSearch = new GooglePageSearch2(webDriverForPage);
+			logger.info("Getting the URL");
+			webDriverForPage.navigate().to(new URI(url).toURL());
+			googlePageSearch.signInButton.click();
+			logger.info("PASS: s_ClickSignInButton");
+			// making the scenario as passed
+			aReturnValue = true;
+		}
+		catch(Exception e) {
+			logger.error("FAIL: s_ClickSignInButton: Error occured while executing scenario \n" + e.getMessage());
+		}
+		logger.info("Scenario: End of s_ClickSignInButton");
+		return aReturnValue;
+	}
+	
+	/**
+	 * @description - Scenario to Click Sign In button
+	 * @startpoint - Google Search screen
+	 * @endpoint - Google Sign In page
+	 * @return - boolean
+	 * @author nikhil_narayanan
+	 */
+	public boolean s_ClickSignInButton2(String url) {
+		logger.info("Scenario: Going to execute s_ClickSignInButton");
+		boolean aReturnValue = false;
+		GooglePageSearch googlePageSearch = null;
+		try {
+			// Initializing the required page files
+			googlePageSearch = new GooglePageSearch(webDriverForPage);
+			logger.info("Getting the URL");
+			webDriverForPage.navigate().to(new URI(url).toURL());
+			googlePageSearch.signInButton.click();
+			logger.info("PASS: s_ClickSignInButton");
+			// making the scenario as passed
+			aReturnValue = true;
+		}
+		catch(Exception e) {
+			logger.error("FAIL: s_ClickSignInButton: Error occured while executing scenario \n" + e.getMessage());
+		}
+		logger.info("Scenario: End of s_ClickSignInButton");
+		return aReturnValue;
+	}
+	
 	
 }

@@ -12,7 +12,7 @@ import com.scripting.base.UIAutomationBaseTestClass;
 import com.scripting.beans.TestCase01Testdatum;
 import com.scripting.scenarios.GoogleSearchScenario;
 
-public class TestCase01 extends UIAutomationBaseTestClass {
+public class TestCase06 extends UIAutomationBaseTestClass {
 	
 	
 	@Test(groups = {"uiAutomationTest"}, description="InitMethod")
@@ -28,8 +28,9 @@ public class TestCase01 extends UIAutomationBaseTestClass {
 		
 		googleSearchScenario = new GoogleSearchScenario(webDriver);
 		
-		// assertTrue(googleSearchScenario.s_PerfromGoogleSearch(testdatum.getGoogleURL(), testdatum.getSearchTerm()), "Search Operation Failed");
-		assertTrue(googleSearchScenario.s_ClickSignInButton2(testdatum.getGoogleURL()), "Sign-In Button click Operation Failed");
+		
+		//assertTrue(googleSearchScenario.s_PerfromGoogleSearch3(testdatum.getGoogleURL(), testdatum.getSearchTerm()), "Search Operation Failed");
+		assertTrue(googleSearchScenario.s_ClickSignInButton(testdatum.getGoogleURL()), "Sign-In Button click Operation Failed");
 		extentForTestClass.log(Status.PASS, "Google Search passed");
 	}
 }

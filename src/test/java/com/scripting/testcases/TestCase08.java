@@ -11,8 +11,9 @@ import com.data.reader.TestDataReaderFactory;
 import com.scripting.base.UIAutomationBaseTestClass;
 import com.scripting.beans.TestCase01Testdatum;
 import com.scripting.scenarios.GoogleSearchScenario;
+import com.scripting.scenarios.SwagLabsScenario;
 
-public class TestCase01 extends UIAutomationBaseTestClass {
+public class TestCase08 extends UIAutomationBaseTestClass {
 	
 	
 	@Test(groups = {"uiAutomationTest"}, description="InitMethod")
@@ -21,15 +22,13 @@ public class TestCase01 extends UIAutomationBaseTestClass {
 		extentForTestClass.log(Status.PASS, "Initialization successful");
 	}
 	
-	@Test(groups = {"uiAutomationTest"}, dependsOnMethods = {"method00_InitMethod"}, description="Perform Google search")
+	@Test(groups = {"uiAutomationTest"}, dependsOnMethods = {"method00_InitMethod"}, description="Swag Labs login")
 	@TestData(type = TestDataReaderFactory.JSON, source = "TestCase01Testdata", dataBean = "com.scripting.beans.TestCase01Testdatum")
 	public void method01_Search(TestCase01Testdatum testdatum) {
-		GoogleSearchScenario googleSearchScenario = null;
+		SwagLabsScenario swagLabsScenario = null;
+		swagLabsScenario = new SwagLabsScenario(webDriver);
 		
-		googleSearchScenario = new GoogleSearchScenario(webDriver);
-		
-		// assertTrue(googleSearchScenario.s_PerfromGoogleSearch(testdatum.getGoogleURL(), testdatum.getSearchTerm()), "Search Operation Failed");
-		assertTrue(googleSearchScenario.s_ClickSignInButton2(testdatum.getGoogleURL()), "Sign-In Button click Operation Failed");
-		extentForTestClass.log(Status.PASS, "Google Search passed");
+		assertTrue(swagLabsScenario.s_PerformSwagLabsLogin2("https://www.saucedemo.com/", "standard_user", "secret_sauce"), "Sign-In Button click Operation Failed");
+		extentForTestClass.log(Status.PASS, "Swag Labs Login Passed");
 	}
 }
