@@ -1,5 +1,7 @@
 package com.scripting.screens.web;
 
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -20,6 +22,10 @@ public class SwagLabsLoginPage {
 	
 	@FindBy(id="user-name")
 	public WebElement usernameInput;
+	
+	// For Testing
+	@FindBy(id="user-name")
+	public List<WebElement> usernameInputs; 
 	
 	@FindBy(id = "password")
 	public WebElement passwordInput;

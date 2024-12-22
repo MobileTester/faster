@@ -1,5 +1,7 @@
 package com.scripting.screens.web;
 
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -7,6 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.pagefactory.DefaultFieldDecorator;
 
 import com.data.configparameters.CommonConfigParameters;
 import com.driver.rolelocator.annotation.FindByRole;
@@ -22,6 +25,11 @@ public class SwagLabsLoginPage2 {
 	
 	@FindByRole(tag = "input", attribute="id", value = "user-name")
 	public WebElement usernameInput;
+	
+	// For Testing - This is not working - The field is getting ignored. 
+	@FindByRole(tag = "input", attribute="id", value = "user-name")
+	public List<WebElement> usernameInputs;
+	
 	// Testing whether the standard Selenium Page Factory annotations will work in this class.
 //	@FindBy(xpath = "//input[@id='user-name']") 
 //	public WebElement usernameInput;
@@ -43,6 +51,7 @@ public class SwagLabsLoginPage2 {
 		logger.info("Going to initialize the page objects");
 		pageDriver = driver;
 		PageFactory.initElements(new FindByRoleFieldDecorator(new FindByRoleLocatorFactory(driver)), this);
+		// PageFactory.initElements(new DefaultFieldDecorator(new FindByRoleLocatorFactory(driver)), this);
 		logger.info("Initialized the page objects");
 	}
 	

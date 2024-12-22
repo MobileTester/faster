@@ -2,6 +2,7 @@ package com.scripting.scenarios;
 
 import java.net.URI;
 import java.net.URL;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -42,6 +43,7 @@ public class SwagLabsScenario {
 			labsLoginPage = new SwagLabsLoginPage(webDriverForPage);
 			webDriverForPage.navigate().to(url); 
 			labsLoginPage.usernameInput.sendKeys(username);
+			logger.info("Just testing the List size for userNameInput: " + labsLoginPage.usernameInputs.size());
 			labsLoginPage.passwordInput.sendKeys(password);
 			labsLoginPage.loginButton.click();
 			logger.info("PASS: s_PerformSwagLabsLogin");
@@ -71,6 +73,10 @@ public class SwagLabsScenario {
 			labsLoginPage = new SwagLabsLoginPage2(webDriverForPage);
 			webDriverForPage.navigate().to(url); 
 			labsLoginPage.usernameInput.sendKeys(username);
+			
+			 int size = labsLoginPage.usernameInputs.size();
+			 logger.info("Just testing the List size for userNameInput: " + size);
+			
 			labsLoginPage.passwordInput.sendKeys(password);
 			labsLoginPage.loginButton.click();
 			logger.info("PASS: s_PerformSwagLabsLogin2");

@@ -1,6 +1,7 @@
 package com.driver.rolelocator.annotation;
 
 import java.lang.reflect.Field;
+import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.SearchContext;
@@ -20,6 +21,8 @@ public class FindByRoleLocatorFactory implements ElementLocatorFactory {
     
     @Override
     public ElementLocator createLocator(Field field) {
+    	
+
         if (field.isAnnotationPresent(FindByRole.class)) {
             return new FindByRoleElementLocator(searchContext, field);
         }
