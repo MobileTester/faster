@@ -19,6 +19,8 @@ enum MobileDriverType {ANDROID, IOS}
 
 
 
+// This class is kept for reference .See whether this class is required. If not required, delete it. 
+// 22 Dec 2024 - The logic of finding elements in - FindByRoleElementLocator is couple of steps ahead that what is written here. 
 public final class FindByRole {
 	
 	private DriverType driverTypePassed; 
