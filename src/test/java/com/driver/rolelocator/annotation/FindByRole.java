@@ -12,5 +12,5 @@ public @interface FindByRole {
 	String tag() default "*";
 	String attribute() default "*";
 	String value() default "";
-	int index() default  1;
+	int index() default  -1;
 }

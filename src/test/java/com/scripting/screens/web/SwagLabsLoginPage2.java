@@ -34,7 +34,11 @@ public class SwagLabsLoginPage2 {
 //	@FindBy(xpath = "//input[@id='user-name']") 
 //	public WebElement usernameInput;
 	
-	@FindByRole(value = "password")
+//	@FindByRole(value = "password")
+//	public WebElement passwordInput;
+	
+	// if contains or starts-with is used, attribute needs to be given. Other wise it is not a valid xpath
+	@FindByRole(attribute = "id", value = "contains('password')")
 	public WebElement passwordInput;
 	
 	// Invalid field

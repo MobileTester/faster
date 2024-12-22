@@ -24,19 +24,36 @@ public class FindByRoleElementLocator implements  ElementLocator {
     private By buildByFromField(Field field) {
         // Check if @FindByRole annotation is present
         if (field.isAnnotationPresent(FindByRole.class)) {
-            FindByRole findByRole = field.getAnnotation(FindByRole.class);
-            String tag = findByRole.tag();
-            String attribute = findByRole.attribute();
-            String value = findByRole.value();
-            int index = findByRole.index();
+        	try {
+        		FindByRole findByRole = field.getAnnotation(FindByRole.class);
+                String tag = findByRole.tag();
+                String attribute = findByRole.attribute();
+                String value = findByRole.value();
+                int index = findByRole.index();
+                
+        		// Adding @ for attributes if required
+        		// only text() does not require @ prepended
+        		if(!attribute.equals("text()") &&  attribute.charAt(0) != '@') {
+        			attribute = '@' + attribute;
+        		}
 
-            // Generate the XPath to target the element using exact match and index
-            
-            // String xpath = String.format("//%s[contains(@%s, '%s')][%d]", tag, attribute, value, index);
-            String xpathString = getXpathString(tag, attribute, value, index);
-            // String xpath = String.format("(//%s[@%s='%s'])[%d]", tag, attribute, value, index);
-            // System.out.println("CustomElementLocator: Built XPath - " + xpath);
-            return By.xpath(xpathString);
+                // Generate the XPath to target the element using exact match and index
+                
+                // String xpath = String.format("//%s[contains(@%s, '%s')][%d]", tag, attribute, value, index);
+                String xpathString = null;
+                if(index == -1) {
+                	xpathString = getXpathString(tag, attribute, value);
+                }
+                else {
+                	xpathString = getXpathString(tag, attribute, value, index);
+                }
+                // String xpath = String.format("(//%s[@%s='%s'])[%d]", tag, attribute, value, index);
+                // System.out.println("CustomElementLocator: Built XPath - " + xpath);
+                return By.xpath(xpathString);
+        	}
+        	catch(Exception e) {
+        		e.printStackTrace();
+        	}
         }
 
         throw new IllegalArgumentException("Field must be annotated with @FindByRole: " + field.getName());
@@ -56,32 +73,27 @@ public class FindByRoleElementLocator implements  ElementLocator {
     // for all other attributes @ is required at beginning which will be prepended if not present.  
 	// if value is expected to be an exact match, send value as it is
 	//		value can also be sent as - contains('value') OR starts-with('value')
-    private String getXpathString(String tag, String attribute, String value, int index) {
+    private String getXpathString(String tag, String attribute, String value) {
     	String xpathString = null;
     	
         String regex1 = "contains\\(['\"](.*)['\"]\\)";
         String regex2 = "starts-with\\(['\"](.*)['\"]\\)";
         // selenium won't support the below 2 regex. Keeping it for reference. 
-//        String regex3 = "ends-with\\(['\"](.*)['\"]\\)";
-//        String regex4 = "matches\\(['\"](.*)['\"]\\)";
+//      String regex3 = "ends-with\\(['\"](.*)['\"]\\)";
+//      String regex4 = "matches\\(['\"](.*)['\"]\\)";
         
 		Pattern pattern = null;
 		Matcher matcher = null;
-    	try {
-    		// Adding @ for attributes if required
-    		// only text() does not require @ prepended
-    		if(!attribute.equals("text()") &&  attribute.charAt(0) != '@') {
-    			attribute = '@' + attribute;
-    		}
-    		 
-    		
+		
+		try {
+			
 			if(value.matches(regex1)) {
 				pattern = Pattern.compile(regex1);
 				matcher = pattern.matcher(value);
 				// extracting the required part only
 				if(matcher.find()) {
 					String extractedValue = matcher.group(1);
-					xpathString = "//%s[contains(%s, '%s')][%d]".formatted(tag, attribute, extractedValue, index);
+					xpathString = "//%s[contains(%s, '%s')]".formatted(tag, attribute, extractedValue);
 				}
 
 			}
@@ -91,7 +103,7 @@ public class FindByRoleElementLocator implements  ElementLocator {
 				// extracting the required part only
 				if(matcher.find()) {
 					String extractedValue = matcher.group(1);
-					xpathString = "//%s[starts-with(%s, '%s')][%d]".formatted(tag, attribute, extractedValue, index);
+					xpathString = "//%s[starts-with(%s, '%s')]".formatted(tag, attribute, extractedValue);
 				}
 			}
 			// It seems Selenium won't support end-with. Keeping code for reference
@@ -116,11 +128,30 @@ public class FindByRoleElementLocator implements  ElementLocator {
 //				}
 //			}
 			else {
-				xpathString = "//%s[%s='%s'][%d]".formatted(tag, attribute, value, index);
+				xpathString = "//%s[%s='%s']".formatted(tag, attribute, value);
 			}
+			
 		} 
     	catch (Exception e) {
 			e.printStackTrace();
+		}
+		
+        return xpathString;
+    	
+    }
+    
+    // index will also be added along with the xpath at end. 
+    private String getXpathString(String tag, String attribute, String value, int index) {
+    	String xpathString = null;
+    	try {
+			
+    		xpathString = getXpathString(tag, attribute, value);
+    		// appending passed index at the end of the xpath. 
+    		xpathString = xpathString + "[%d]".formatted(index); 
+    		
+		} 
+    	catch (Exception e) {
+    		e.printStackTrace();
 		}
     	return xpathString;
     }

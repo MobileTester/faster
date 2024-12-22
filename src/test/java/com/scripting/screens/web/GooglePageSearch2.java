@@ -11,6 +11,7 @@ import org.openqa.selenium.support.pagefactory.DefaultFieldDecorator;
 
 import com.data.configparameters.CommonConfigParameters;
 import com.driver.rolelocator.annotation.FindByRole;
+import com.driver.rolelocator.annotation.FindByRoleFieldDecorator;
 import com.driver.rolelocator.annotation.FindByRoleLocatorFactory;
 
 import io.appium.java_client.pagefactory.AndroidBy;
@@ -31,8 +32,8 @@ public class GooglePageSearch2 {
 		pageDriver = driver;
 		// PageFactory.initElements(new AjaxElementLocatorFactory(driver, CommonConfigParameters.timeOutForElementPolling), this);
 		// new FindByRoleLocatorFactory(driver).createLocator(searchTextBox.getClass().getDeclaredField("searchTextBox"));
-		// PageFactory.initElements(new FindByRoleFieldDecorator(new FindByRoleLocatorFactory(driver)), this);
-		PageFactory.initElements(new DefaultFieldDecorator(new FindByRoleLocatorFactory(driver)), this);
+		PageFactory.initElements(new FindByRoleFieldDecorator(new FindByRoleLocatorFactory(driver)), this);
+		// PageFactory.initElements(new DefaultFieldDecorator(new FindByRoleLocatorFactory(driver)), this);
 		
 		logger.info("Initialized the page objects");
 	}
